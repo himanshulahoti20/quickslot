@@ -2,12 +2,12 @@ part of 'booking_bloc.dart';
 
 sealed class BookingState {}
 
-final class BookingInitial extends BookingState {}
+final class BookingIdle extends BookingState {}
 final class BookingLoading extends BookingState {}
 
 final class BookingSuccess extends BookingState {
-  BookingSuccess(this.bookingId);
-  final int bookingId;
+  BookingSuccess(this.booking);
+  final Booking booking;
 }
 
 final class BookingConflict extends BookingState {}

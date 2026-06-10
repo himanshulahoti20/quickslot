@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:app/core/router/app_shell.dart';
 import 'package:app/features/auth/bloc/auth_bloc.dart';
 import 'package:app/features/auth/screens/user_select_screen.dart';
 import 'package:app/features/venues/screens/venue_list_screen.dart';
@@ -37,7 +38,7 @@ class AppRouter {
         ),
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) =>
-              _AppShell(navigationShell: navigationShell),
+              AppShell(navigationShell: navigationShell),
           branches: [
             StatefulShellBranch(
               routes: [
@@ -66,40 +67,6 @@ class AppRouter {
           ],
         ),
       ],
-    );
-  }
-}
-
-// ── Shell scaffold with bottom nav ──────────────────────────────────────────
-
-class _AppShell extends StatelessWidget {
-  const _AppShell({required this.navigationShell});
-  final StatefulNavigationShell navigationShell;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          // Tapping the current tab navigates back to the branch root.
-          initialLocation: index == navigationShell.currentIndex,
-        ),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.sports_tennis_outlined),
-            selectedIcon: Icon(Icons.sports_tennis),
-            label: 'Venues',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.calendar_today),
-            label: 'My Bookings',
-          ),
-        ],
-      ),
     );
   }
 }

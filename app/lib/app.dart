@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:app/core/api/api_client.dart';
+import 'package:app/core/di/injection.dart';
 import 'package:app/core/router/app_router.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/auth/bloc/auth_bloc.dart';
@@ -22,7 +24,7 @@ class _QuickSlotAppState extends State<QuickSlotApp> {
   void initState() {
     super.initState();
     _authBloc = AuthBloc();
-    _myBookingsBloc = MyBookingsBloc();
+    _myBookingsBloc = MyBookingsBloc(getIt<ApiClient>());
     _router = AppRouter.create(_authBloc);
   }
 

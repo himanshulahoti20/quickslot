@@ -1,10 +1,11 @@
 part of 'booking_bloc.dart';
 
-abstract class BookingEvent {}
+sealed class BookingEvent {}
 
 final class BookSlot extends BookingEvent {
-  BookSlot({required this.slotId, required this.date, required this.userId});
+  BookSlot({required this.slotId, required this.date});
   final int slotId;
   final String date;
-  final int userId;
 }
+
+final class ResetBooking extends BookingEvent {}

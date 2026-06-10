@@ -12,8 +12,8 @@ void main() {
     setUp(() => bookingBloc = BookingBloc(_MockApiClient()));
     tearDown(() => bookingBloc.close());
 
-    test('initial state is BookingInitial', () {
-      expect(bookingBloc.state, isA<BookingInitial>());
+    test('initial state is BookingIdle', () {
+      expect(bookingBloc.state, isA<BookingIdle>());
     });
   });
 }

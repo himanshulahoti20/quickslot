@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:app/core/constants/app_colors.dart';
 import 'package:app/features/bookings/bloc/booking_bloc.dart';
 import 'package:app/features/slots/models/slot.dart';
 import 'package:app/features/venues/models/venue.dart';
@@ -17,9 +16,12 @@ class BookingConfirmSheet extends StatelessWidget {
   final Slot slot;
   final DateTime date;
 
+  static IconData _sportIcon(String sport) =>
+      sport == 'badminton' ? Icons.sports_tennis : Icons.sports_soccer;
+
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('EEE, d MMM yyyy').format(date);
+    final formattedDate = DateFormat('EEEE, d MMMM').format(date);
 
     return Padding(
       padding: EdgeInsets.only(
@@ -34,7 +36,7 @@ class BookingConfirmSheet extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.calendar_today, size: 20),
+              Icon(_sportIcon(venue.sport), size: 22),
               const SizedBox(width: 8),
               Text(
                 'Confirm Booking',
@@ -62,22 +64,16 @@ class BookingConfirmSheet extends StatelessWidget {
                           BookSlot(
                             slotId: slot.id,
                             date: DateFormat('yyyy-MM-dd').format(date),
-                            userId: 0, // ApiClient.currentUserId handles auth
                           ),
                         ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 child: loading
                     ? const SizedBox(
                         height: 20,
                         width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : const Text('Book Now'),
               );
