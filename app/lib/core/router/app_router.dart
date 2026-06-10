@@ -48,10 +48,8 @@ class AppRouter {
                     GoRoute(
                       // path is ':id' (relative to parent '/venues')
                       path: ':id',
-                      builder: (context, state) {
-                        final venue = state.extra as Venue;
-                        return VenueDetailScreen(venueId: venue.id);
-                      },
+                      builder: (context, state) =>
+                          VenueDetailScreen(venue: state.extra as Venue),
                     ),
                   ],
                 ),

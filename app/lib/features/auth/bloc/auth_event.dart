@@ -1,10 +1,8 @@
 part of 'auth_bloc.dart';
 
-abstract class AuthEvent {}
+sealed class AuthEvent {}
 
 final class SelectUser extends AuthEvent {
-  SelectUser(this.userId);
-  final int userId;
+  SelectUser(this.user);
+  final AppUser user;
 }
-
-final class ClearUser extends AuthEvent {}
