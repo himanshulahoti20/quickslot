@@ -1,6 +1,11 @@
-// Freezed model — run: dart run build_runner build
-class AppUser {
-  const AppUser({required this.id, required this.name});
-  final int id;
-  final String name;
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'app_user.freezed.dart';
+
+@freezed
+class AppUser with _$AppUser {
+  const factory AppUser({
+    required int id,
+    required String name,
+  }) = _AppUser;
 }

@@ -1,27 +1,25 @@
-// Freezed model — run: dart run build_runner build
-class Booking {
-  const Booking({
-    required this.bookingId,
-    required this.slotId,
-    required this.date,
-    required this.status,
-    required this.startTime,
-    required this.endTime,
-    required this.venueId,
-    required this.venueName,
-    required this.sport,
-    required this.address,
-  });
-  final int bookingId;
-  final int slotId;
-  final String date;
-  final String status;
-  final String startTime;
-  final String endTime;
-  final int venueId;
-  final String venueName;
-  final String sport;
-  final String address;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  bool get isActive => status == 'active';
+part 'booking.freezed.dart';
+part 'booking.g.dart';
+
+@freezed
+class Booking with _$Booking {
+  // booking_id is the JSON key from both POST /bookings and GET /bookings/users/:id/bookings.
+  // userId defaults to 0 when absent (GET list response does not include user_id).
+  // startTime, endTime, venueName, sport default to '' when absent (POST confirmation response).
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory Booking({
+    @JsonKey(name: 'booking_id') required int id,
+    required int slotId,
+    @JsonKey(defaultValue: 0) required int userId,
+    required String date,
+    @Default('active') String status,
+    @Default('') String startTime,
+    @Default('') String endTime,
+    @Default('') String venueName,
+    @Default('') String sport,
+  }) = _Booking;
+
+  factory Booking.fromJson(Map<String, dynamic> json) => _$BookingFromJson(json);
 }

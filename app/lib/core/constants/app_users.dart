@@ -1,7 +1,7 @@
-class AppUsers {
-  static const Map<int, String> users = {
-    1: 'Rahul',
-    2: 'Priya',
-    3: 'Arjun',
-  };
-}
+import 'package:app/features/auth/models/app_user.dart';
+
+const List<AppUser> kAppUsers = [
+  AppUser(id: 1, name: 'Rahul'),
+  AppUser(id: 2, name: 'Priya'),
+  AppUser(id: 3, name: 'Arjun'),
+];
