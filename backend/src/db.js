@@ -31,9 +31,15 @@ db.exec(`
     user_id    INTEGER NOT NULL REFERENCES users(id),
     date       TEXT NOT NULL,
     status     TEXT NOT NULL DEFAULT 'active',
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    UNIQUE(slot_id, date)
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+`);
+
+// Partial index so cancelled bookings don't block re-booking the same slot on the same date.
+db.exec(`
+  CREATE UNIQUE INDEX IF NOT EXISTS uq_active_booking
+  ON bookings(slot_id, date)
+  WHERE status = 'active';
 `);
 
 module.exports = db;
