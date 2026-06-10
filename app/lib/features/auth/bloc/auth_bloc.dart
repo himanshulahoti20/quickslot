@@ -8,10 +8,16 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<SelectUser>(_onSelectUser);
+    on<SignOut>(_onSignOut);
   }
 
   void _onSelectUser(SelectUser event, Emitter<AuthState> emit) {
     ApiClient.currentUserId = event.user.id;
     emit(AuthAuthenticated(event.user));
+  }
+
+  void _onSignOut(SignOut event, Emitter<AuthState> emit) {
+    ApiClient.currentUserId = null;
+    emit(AuthInitial());
   }
 }

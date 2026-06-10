@@ -43,11 +43,29 @@ class _VenueListScreenState extends State<VenueListScreen> {
           actions: [
             if (userName != null)
               Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Center(
-                  child: Text(
-                    userName,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
+                padding: const EdgeInsets.only(right: 12),
+                child: Tooltip(
+                  message: 'Switch user',
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<AuthBloc>().add(SignOut());
+                      context.go('/');
+                    },
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      child: Text(
+                        userName[0].toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

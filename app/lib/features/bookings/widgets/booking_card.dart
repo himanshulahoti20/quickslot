@@ -76,21 +76,21 @@ class BookingCard extends StatelessWidget {
   Future<void> _confirmCancel(BuildContext context) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Cancel Booking'),
         content: Text(
           'Cancel your slot at ${booking.venueName} on ${booking.date}?',
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
             child: const Text('Keep'),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
             ),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
             child: const Text('Cancel Booking'),
           ),
         ],

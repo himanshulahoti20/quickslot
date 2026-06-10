@@ -16,13 +16,22 @@ class SlotTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final bgColor = isAvailable
         ? AppColors.available.withValues(alpha: 0.08)
-        : Colors.grey.shade200;
+        : isDark
+            ? Colors.grey.shade800
+            : Colors.grey.shade200;
     final borderColor = isAvailable
         ? AppColors.available.withValues(alpha: 0.4)
-        : Colors.grey.shade300;
+        : isDark
+            ? Colors.grey.shade700
+            : Colors.grey.shade300;
     final dotColor = isAvailable ? AppColors.available : AppColors.booked;
+    final textColor = isAvailable
+        ? null // inherit from theme
+        : Colors.grey.shade500;
 
     return AbsorbPointer(
       absorbing: !isAvailable,
@@ -56,11 +65,13 @@ class SlotTile extends StatelessWidget {
                       '$startTime–$endTime',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 13,
+                        color: textColor,
                         decoration: isAvailable
                             ? TextDecoration.none
                             : TextDecoration.lineThrough,
+                        decorationColor: textColor,
                       ),
                     ),
                   ),

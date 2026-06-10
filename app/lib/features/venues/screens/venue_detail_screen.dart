@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +42,7 @@ class _VenueDetailBody extends StatefulWidget {
 
 class _VenueDetailBodyState extends State<_VenueDetailBody> {
   late DateTime _selectedDate;
+  Timer? _pollTimer;
 
   @override
   void initState() {
@@ -47,6 +50,15 @@ class _VenueDetailBodyState extends State<_VenueDetailBody> {
     final now = DateTime.now();
     _selectedDate = DateTime(now.year, now.month, now.day);
     _loadSlots(_selectedDate);
+    _pollTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      context.read<SlotsBloc>().add(RefreshSlots());
+    });
+  }
+
+  @override
+  void dispose() {
+    _pollTimer?.cancel();
+    super.dispose();
   }
 
   void _loadSlots(DateTime date) {

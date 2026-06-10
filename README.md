@@ -163,6 +163,21 @@ Using `WHERE status = 'active'` (not a plain UNIQUE constraint) means a cancelle
 
 ---
 
+## Extras (beyond the minimum spec)
+
+| Feature | Detail |
+| --- | --- |
+| **Live slot polling** | `Timer.periodic(30s)` in `VenueDetailScreen` dispatches `RefreshSlots` — a slot booked on another phone flips automatically without any tap. Timer is cancelled in `dispose` so there are no background leaks. |
+| **Deployed backend** | Railway HTTPS deployment — app works on any device with no local server needed |
+| **Switch user** | Avatar in the AppBar dispatches `SignOut`, clears `currentUserId`, and navigates back to user select |
+| **Silent grid refresh** | After booking, `RefreshSlots` re-fetches without emitting a loading state — grid updates feel instant |
+| **Shimmer loading grid** | Skeleton placeholder tiles while slots fetch instead of a plain spinner |
+| **11 backend smoke tests** | Shell script covering every endpoint including the 409 double-booking case |
+| **10 BLoC unit tests** | `BookingConflict` path, `ResetBooking` with `seed:`, cancel→refetch chain verified |
+| **Dark theme** | Full light/dark support with theme-aware slot tile colors |
+
+---
+
 ## Test Suite
 
 ### Backend — Smoke Tests (`backend/test-api.sh`)
@@ -234,7 +249,6 @@ Test 6 is the double-booking guard. Tests 8 + 9 verify soft-cancel and idempoten
 | Cut | Reason |
 |-----|--------|
 | JWT / Firebase auth | Problem statement explicitly said: *"Keep auth light: hardcoded users plus an X-User-Id header is acceptable. Do not burn time building full auth."* Spent zero time here. |
-| Slot status polling | Bonus item. Core flow was prioritised first. Would add next. |
 | Offline cache for My Bookings | Bonus item. Would use `shared_preferences` or `hive`. |
 | Dockerized backend | Bonus item. Deployed directly to Railway instead. |
 | Filter slots by time of day | Bonus item. |
@@ -244,10 +258,9 @@ Test 6 is the double-booking guard. Tests 8 + 9 verify soft-cancel and idempoten
 
 ## What I'd Do With One More Day
 
-1. **Live slot polling** — `SlotsBloc` already has a `RefreshSlots` event. Add a `Timer.periodic` (30s) in `VenueDetailScreen` so booked slots flip live on another phone without a manual refresh.
-2. **Offline My Bookings cache** — persist the last fetched list with `shared_preferences`; show it instantly on mount before the network call returns.
-3. **SlotsBloc unit tests** — `LoadSlots` success/error and `RefreshSlots` silent-retry paths are not yet covered.
-4. **Widget test for booking confirm flow** — pump `BookingConfirmSheet` with a seeded `BookingBloc`, tap "Book Now", verify the loading spinner appears and then the success snackbar.
+1. **Offline My Bookings cache** — persist the last fetched list with `shared_preferences`; show it instantly on mount before the network call returns.
+2. **SlotsBloc unit tests** — `LoadSlots` success/error and `RefreshSlots` silent-retry paths are not yet covered.
+3. **Widget test for booking confirm flow** — pump `BookingConfirmSheet` with a seeded `BookingBloc`, tap "Book Now", verify the loading spinner appears and then the success snackbar.
 
 ---
 
