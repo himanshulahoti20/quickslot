@@ -1,5 +1,6 @@
-const express = require('express');
-const db      = require('../db');
+const express          = require('express');
+const db               = require('../db');
+const { addOneHour }   = require('../utils/time');
 
 const router = express.Router();
 
@@ -9,11 +10,6 @@ function isValidDate(str) {
   if (!DATE_RE.test(str)) return false;
   const d = new Date(str);
   return !isNaN(d.getTime());
-}
-
-function addOneHour(time) {
-  const [h, m] = time.split(':').map(Number);
-  return `${String(h + 1).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 // GET /venues

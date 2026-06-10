@@ -1,6 +1,7 @@
-const express     = require('express');
-const db          = require('../db');
-const requireUser = require('../middleware/auth');
+const express          = require('express');
+const db               = require('../db');
+const requireUser      = require('../middleware/auth');
+const { addOneHour }   = require('../utils/time');
 
 const router = express.Router();
 
@@ -79,6 +80,33 @@ router.delete('/:id', requireUser, (req, res) => {
   }
 
   res.json({ message: 'Booking cancelled' });
+});
+
+// GET /users/:id/bookings
+router.get('/users/:id/bookings', (req, res) => {
+  const rows = db.prepare(`
+    SELECT b.id          AS booking_id,
+           b.slot_id,
+           b.date,
+           b.status,
+           s.start_time,
+           s.venue_id,
+           v.name        AS venue_name,
+           v.sport,
+           v.address
+    FROM   bookings b
+    JOIN   slots    s ON s.id = b.slot_id
+    JOIN   venues   v ON v.id = s.venue_id
+    WHERE  b.user_id = ?
+    ORDER  BY b.date, s.start_time
+  `).all(Number(req.params.id));
+
+  const bookings = rows.map(row => ({
+    ...row,
+    end_time: addOneHour(row.start_time),
+  }));
+
+  res.json(bookings);
 });
 
 module.exports = router;
