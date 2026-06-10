@@ -1,11 +1,5 @@
-const express = require('express');
-const cors    = require('cors');
-const seed    = require('./src/seed');
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
+const app  = require('./src/app');
+const seed = require('./src/seed');
 
 seed();
 
