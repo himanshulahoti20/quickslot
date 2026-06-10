@@ -1,0 +1,11 @@
+class ApiException implements Exception {
+  const ApiException(this.message);
+  final String message;
+
+  @override
+  String toString() => 'ApiException: $message';
+}
+
+class SlotTakenException extends ApiException {
+  const SlotTakenException() : super('This slot has already been booked.');
+}
