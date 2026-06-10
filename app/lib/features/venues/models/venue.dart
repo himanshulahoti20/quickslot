@@ -4,7 +4,8 @@ part 'venue.freezed.dart';
 part 'venue.g.dart';
 
 @freezed
-class Venue with _$Venue {
+abstract class Venue with _$Venue {
+  // ignore: invalid_annotation_target
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Venue({
     required int id,

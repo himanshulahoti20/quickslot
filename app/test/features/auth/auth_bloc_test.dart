@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bloc_test/bloc_test.dart';
 import 'package:app/features/auth/bloc/auth_bloc.dart';
 
 void main() {

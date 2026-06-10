@@ -4,9 +4,10 @@ part 'slot.freezed.dart';
 part 'slot.g.dart';
 
 @freezed
-class Slot with _$Slot {
+abstract class Slot with _$Slot {
   const Slot._();
 
+  // ignore: invalid_annotation_target
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Slot({
     required int id,
