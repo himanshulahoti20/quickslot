@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String base = 'http://10.0.2.2:3000'; // Android emulator
+  static const String base = 'https://quickslot-production-a43d.up.railway.app';
 
   static const String venues   = '/venues';
   static const String bookings = '/bookings';

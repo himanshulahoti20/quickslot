@@ -22,7 +22,7 @@ void main() {
     blocTest<AuthBloc, AuthState>(
       'emits AuthAuthenticated when SelectUser is added',
       build: () => AuthBloc(),
-      act: (bloc) => bloc.add(SelectUser(user: kAppUsers.first)),
+      act: (bloc) => bloc.add(SelectUser(kAppUsers.first)),
       expect: () => [
         isA<AuthAuthenticated>().having(
           (s) => s.user,
